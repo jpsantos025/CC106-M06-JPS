@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
 
+    # MODULE 06 - ORIGINAL ROUTES
+
     path(
         '',
         views.student_registration,
@@ -13,6 +15,38 @@ urlpatterns = [
         'success/',
         views.registration_success,
         name='registration_success'
+    ),
+
+    # MODULE 07 - NEW ROUTES
+
+    path(
+        'students/',
+        views.student_list,
+        name='student_list'
+    ),
+
+    path(
+        'students/create/',
+        views.student_create,
+        name='student_create'
+    ),
+
+    path(
+        'students/<int:pk>/',
+        views.student_detail,
+        name='student_detail'
+    ),
+
+    path(
+        'students/<int:pk>/edit/',
+        views.student_update,
+        name='student_update'
+    ),
+
+    path(
+        'students/<int:pk>/delete/',
+        views.student_delete,
+        name='student_delete'
     ),
 
 ]
