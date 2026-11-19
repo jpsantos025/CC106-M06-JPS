@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 
 from .models import Student
 from .forms import StudentForm
+
+
+def staff_check(user):
+    return user.is_authenticated and user.is_staff
 
 
 # MODULE 06 - ORIGINAL REGISTRATION
@@ -44,6 +49,14 @@ def registration_success(request):
     )
 
 
+@user_passes_test(staff_check, login_url='login')
+def staff_dashboard(request):
+    return render(
+        request,
+        'registration/dashboard.html'
+    )
+
+
 # MODULE 07 - STUDENT DIRECTORY
 
 def student_list(request):
@@ -76,6 +89,7 @@ def student_list(request):
 
 # STUDENT DETAIL
 
+@user_passes_test(staff_check, login_url='login')
 def student_detail(request, pk):
 
     student = get_object_or_404(Student, pk=pk)
@@ -89,6 +103,7 @@ def student_detail(request, pk):
 
 # CREATE STUDENT
 
+@user_passes_test(staff_check, login_url='login')
 def student_create(request):
 
     if request.method == 'POST':
@@ -122,6 +137,7 @@ def student_create(request):
 
 # UPDATE STUDENT
 
+@user_passes_test(staff_check, login_url='login')
 def student_update(request, pk):
 
     student = get_object_or_404(Student, pk=pk)
@@ -164,6 +180,7 @@ def student_update(request, pk):
 
 # DELETE STUDENT
 
+@user_passes_test(staff_check, login_url='login')
 def student_delete(request, pk):
 
     student = get_object_or_404(Student, pk=pk)

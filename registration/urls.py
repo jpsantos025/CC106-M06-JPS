@@ -17,6 +17,12 @@ urlpatterns = [
         name='registration_success'
     ),
 
+    path(
+        'dashboard/',
+        views.staff_dashboard,
+        name='staff_dashboard'
+    ),
+
     # MODULE 07 - NEW ROUTES
 
     path(
